@@ -1,8 +1,8 @@
 let count = 3;
-const intervalID = setInterval(() => {
+const countDownID = setInterval(() => {
   if (count === 0) {
     console.log("Blast off!");
-    clearInterval(intervalID);
+    clearInterval(countDownID);
   } else {
     console.log(count);
     count--;
