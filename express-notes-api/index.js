@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const fs = require('fs');
 const data = require('./data.json');
 
 app.listen(3000, () => {
@@ -30,4 +31,32 @@ app.get('/api/notes/:id', (req, res) => {
       break;
     }
   }
+});
+
+const jsonMiddleware = express.json();
+app.use(jsonMiddleware);
+
+app.post('/api/notes', (req, res) => {
+  const body = req.body;
+  const currentId = data.nextId;
+  if (!(Object.keys(body).includes('content'))) {
+    res.status(400).json({ error: "content is a required field" });
+  }
+
+  data.notes[data.nextId] = {
+    id: currentId,
+    content: body.content
+  };
+  data.nextId++;
+
+  fs.writeFile('data.json', JSON.stringify(data, null, 2), (err) => {
+    if (err) { res.status(500).json({ error: "An unexpected error has occurred." }); }
+    else {
+      res.status(201).json({
+        id: currentId,
+        content: body.content
+      })
+    }
+  })
+
 });
