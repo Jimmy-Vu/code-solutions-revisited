@@ -68,14 +68,13 @@ app.delete('/api/notes/:id', (req, res) => {
 
   if (!(Object.keys(data.notes).includes(req.params.id))) {
     res.status(404).json({ error: `cannot find any notes with the id of ${id}` })
+  } else {
+    delete data.notes[id];
+    fs.writeFile('data.json', JSON.stringify(data, null, 2), (err) => {
+      if (err) { res.status(500).json({ error: "An unexpected error has occurred." }); }
+      else {
+        res.sendStatus(204);
+      }
+    })
   }
-
-  delete data.notes[id];
-
-  fs.writeFile('data.json', JSON.stringify(data, null, 2), (err) => {
-    if (err) { res.status(500).json({ error: "An unexpected error has occurred." }); }
-    else {
-      res.status(204);
-    }
-  })
 });
