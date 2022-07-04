@@ -93,7 +93,6 @@ app.put('/api/notes/:id', (req, res) => {
 
     data.notes[req.params.id].content = body.content;
 
-
     fs.writeFile('data.json', JSON.stringify(data, null, 2), (err) => {
       if (err) { res.status(500).json({ error: "An unexpected error has occurred." }); }
       else {
