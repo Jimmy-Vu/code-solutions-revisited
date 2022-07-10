@@ -1,0 +1,20 @@
+             List of relations
+ Schema |     Name     | Type  |   Owner   
+--------+--------------+-------+-----------
+ public | actors       | table | hightower
+ public | addresses    | table | hightower
+ public | castMembers  | table | hightower
+ public | categories   | table | hightower
+ public | cities       | table | hightower
+ public | countries    | table | hightower
+ public | customers    | table | hightower
+ public | filmCategory | table | hightower
+ public | films        | table | hightower
+ public | inventory    | table | hightower
+ public | languages    | table | hightower
+ public | payments     | table | hightower
+ public | rentals      | table | hightower
+ public | staff        | table | hightower
+ public | stores       | table | hightower
+(15 rows)
+
