@@ -38,5 +38,32 @@ app.use(middleware);
 app.post('/api/grades', (req, res) => {
   const entry = req.body;
   const params = [entry.name, entry.course, entry.score];
-  res.json(params);
+  const scoreInt = Number.parseInt(entry.score, 10);
+
+  if ((scoreInt < 0 || scoreInt > 100) || !Number.isInteger(scoreInt)) {
+    res.status(400).json({error: 'Please enter a postive integer from 0 to 100 for the score.'});
+    return;
+  } else if (!entry.name || !entry.course) {
+    res.status(400).json({ error: 'Please make sure that the name and course are included.' });
+    return;
+  }
+
+
+
+  const sql = `
+    insert into "grades" ("name", "course", "score")
+    values ($1, $2, $3)
+    returning *;
+  `;
+
+  db.query(sql, params)
+    .then(result => {
+      const grade = result.rows[0];
+      res.status(201).json(grade);
+    })
+    .catch(err => {
+      res.status(500).json({
+        error: 'An unexpected error has occurred.'
+      });
+    });
 })
