@@ -63,14 +63,14 @@ router.post('/api/grades', (req, res) => {
 })
 
 router.put('/api/grades/:gradeId', (req, res) => {
-  const idInt = Numbers.parseInt(req.params.gradeId, 10);
+  const idInt = Number.parseInt(req.params.gradeId, 10);
 
   if (!Number.isInteger(idInt) || idInt < 1) {
     res.status(400).json({ error: 'Please enter a postive integer for the grade ID.' });
     return;
   }
-
-  const values = [entry.name, entry.course, entry.score];
+  const entry = req.body;
+  const values = [entry.name, entry.course, entry.score, idInt];
   const scoreInt = Number.parseInt(entry.score, 10);
 
   if ((scoreInt < 0 || scoreInt > 100) || !Number.isInteger(scoreInt)) {
@@ -80,6 +80,47 @@ router.put('/api/grades/:gradeId', (req, res) => {
     res.status(400).json({ error: 'Please make sure that the name and course are included.' });
     return;
   }
+
+  const sql = `
+    update "grades"
+      set "name" = $1,
+          "course" = $2,
+          "score" = $3
+      where "gradeId" = $4
+      returning *;
+    `;
+
+  db.query(sql, values)
+    .then(result => {
+      const grade = result.rows[0];
+      if (grade === undefined) {
+        res.status(404).json({ error: 'The supplied gradeId does not exist.' });
+      } else {
+        res.status(200).json(grade);
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'An unexpected error has occurred.'
+      });
+    });
+})
+
+router.delete('/api/grades/:gradeId', (req, res) => {
+  const idInt = Number.parseInt(req.params.gradeId, 10);
+
+  if (!Number.isInteger(idInt) || idInt < 1) {
+    res.status(400).json({ error: 'Please enter a postive integer for the grade ID.' });
+    return;
+  }
+
+  const value = [idInt];
+  const sql = `
+    delete from "grades"
+      where "gradeId" = $1
+      returning *;
+    `;
 })
 
 module.exports = router;
