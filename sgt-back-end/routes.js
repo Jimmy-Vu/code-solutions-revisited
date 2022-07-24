@@ -115,12 +115,28 @@ router.delete('/api/grades/:gradeId', (req, res) => {
     return;
   }
 
-  const value = [idInt];
+  const values = [idInt];
   const sql = `
     delete from "grades"
       where "gradeId" = $1
       returning *;
     `;
+
+  db.query(sql, values)
+    .then(result => {
+      const grade = result.rows[0];
+      if (grade === undefined) {
+        res.status(404).json({ error: 'The supplied gradeId does not exist.' });
+      } else {
+        res.status(204).json(grade);
+      };
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'An unexpected error has occurred.'
+      });
+    });
 })
 
 module.exports = router;
