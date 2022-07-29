@@ -21,7 +21,7 @@ class ExampleClass {
   }
 }
 
-const example = ExampleClass();
+const example = new ExampleClass();
 
 console.log('typeof example:', typeof example);
 console.log('value of example:', example);
