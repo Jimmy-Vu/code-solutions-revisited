@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 7em;
+}
+
+.switch-container {
+  height: 3em;
+  width: 3em;
+}
+
+.switch-container_off {
+  background-color: grey;
+}
+
+.switch-container_on {
+  background-color: green;
+}
