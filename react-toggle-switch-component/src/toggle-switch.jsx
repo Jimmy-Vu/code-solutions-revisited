@@ -19,7 +19,7 @@ function ToggleSwitch(props) {
   return (
     <div className='container' onClick={clickHandler}>
       <div className={`switch-container ${switchContainerStyle}`}>
-        <div className='switch-selector_off'></div>
+        <div className='switch-selector'></div>
       </div>
       <h1 className='switch-status-label'>{switchStatus}</h1>
     </div>

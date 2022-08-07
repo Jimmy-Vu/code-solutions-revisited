@@ -1,19 +1,34 @@
 .container {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  width: 7em;
 }
 
 .switch-container {
-  height: 3em;
+  display: flex;
+  height: 1.5em;
   width: 3em;
+  border: solid black 2px;
+  border-radius: 25px;
+  margin: auto 2em;
+}
+
+.switch-container:hover{
+  cursor: pointer;
 }
 
 .switch-container_off {
+  justify-content: flex-start;
   background-color: grey;
 }
 
 .switch-container_on {
+  justify-content: flex-end;
   background-color: green;
+}
+
+.switch-selector {
+  height: 1.5em;
+  width: 1.5em;
+  border-radius: 25px;
+  background-color: lightgray;
 }
