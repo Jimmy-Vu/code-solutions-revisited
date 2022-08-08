@@ -1,0 +1,26 @@
+.stopwatch-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2em;
+}
+
+.stopwatch-face {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 10em;
+  width: 10em;
+  border: solid black 3px;
+  border-radius: 50%;
+}
+
+.face-number {
+  font-size: 3em;
+}
+
+.stopwatch-button {
+  font-size: 2em;
+  margin-top: 0.5em;
+}
