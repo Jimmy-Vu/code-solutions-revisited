@@ -1,0 +1,24 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+.container {
+  position: relative;
+  height: 100vh;
+}
+
+.hidden {
+  display: none;
+}
+
+.fa-bars {
+  font-size: 2em;
+}
+
+.drawer-modal {
+  position: absolute;
+  top: 0;
+  width: 15em;
+  height: 100vh;
+  background-color: red;
+}
