@@ -1,0 +1,20 @@
+.password-row {
+  display: flex;
+}
+
+.password-input {
+  width: 13em;
+}
+
+.password-mark {
+  font-size: 1.25em;
+  margin-left: 0.5em;
+}
+
+.password-error {
+  color: red;
+}
+
+.fa-x {
+  color: red;
+}
