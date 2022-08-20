@@ -89,8 +89,9 @@ export default function App(props) {
     })
       .then(res => res.json())
       .then(data => setState(prev => {
-        prev.todos.splice(index, 1, data);
-        return { todos: prev.todos };
+        const newTodosArray = prev.todos.slice();
+        newTodosArray.splice(index, 1, data);
+        return { todos: newTodosArray };
       }))
       .catch(error => console.error('Error:', error));
   }
