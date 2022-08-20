@@ -14,7 +14,6 @@ export default function App(props) {
      * Then 😉, once the response JSON is received and parsed,
      * update state with the received todos.
      */
-    console.log('todos:', state.todos);
     fetch('/api/todos', { method: 'GET' })
       .then(res => res.json())
       .then(data => setState({ todos: data }))
@@ -22,7 +21,6 @@ export default function App(props) {
         console.error('Error:', error);
       })
   }, []);
-
 
   function addTodo(newTodo) {
     /**
@@ -46,7 +44,6 @@ export default function App(props) {
     })
       .then(res => res.json())
       .then(data => {
-        console.log('Data:', data);
         setState(prev => {
           return { todos: prev.todos.concat(data) }
         });
@@ -75,6 +72,27 @@ export default function App(props) {
      * TIP: Be sure to SERIALIZE the updates in the body with JSON.stringify()
      * And specify the "Content-Type" header as "application/json"
      */
+    const target = state.todos.find(element => element.todoId === todoId);
+    const index = state.todos.indexOf(target);
+    let completedStatus = target.isCompleted;
+
+    completedStatus
+      ? completedStatus = false
+      : completedStatus = true;
+
+    const updatedTodo = { ...target, isCompleted: completedStatus };
+
+    fetch(`/api/todos/${todoId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updatedTodo)
+    })
+      .then(res => res.json())
+      .then(data => setState(prev => {
+        prev.todos.splice(index, 1, data);
+        return { todos: prev.todos };
+      }))
+      .catch(error => console.error('Error:', error));
   }
 
   return (
