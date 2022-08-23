@@ -8,10 +8,10 @@ const errorMiddleware = require('./error-middleware');
 const authorizationMiddleware = require('./authorization-middleware');
 
 const db = new pg.Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
+  connectionString: process.env.DATABASE_URL
+  // ssl: {
+  //   rejectUnauthorized: false
+  // }
 });
 
 const app = express();
