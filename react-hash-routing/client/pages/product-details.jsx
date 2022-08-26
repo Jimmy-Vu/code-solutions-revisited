@@ -38,7 +38,7 @@ export default class ProductDetails extends React.Component {
             <div className="row">
               <div className="col">
                 {/* this anchor should go back to the catalog at '#' */}
-                <a href="" className="btn text-secondary">
+                <a href="#" className="btn text-secondary">
                   &lt; Back to catalog
                 </a>
               </div>

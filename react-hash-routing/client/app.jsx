@@ -1,28 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from './components/header';
 import Catalog from './pages/catalog';
 import NotFound from './pages/not-found';
 import ProductDetails from './pages/product-details';
 import { parseRoute } from './lib';
 
-export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      route: parseRoute(window.location.hash)
-    };
-  }
+export default function App(props) {
 
-  componentDidMount() {
+  const [stateRoute, setStateRoute] = useState({
+    route: parseRoute(window.location.hash)
+  });
+
+  useEffect(() => {
     /**
      * Listen for hash change events on the window object
      * Each time the window.location.hash changes, parse
      * it with the parseRoute() function and update state
      */
-  }
+    window.addEventListener('hashchange', event => {
+      setStateRoute({ route: parseRoute(window.location.hash) })
+    });
+  }, [])
 
-  renderPage() {
-    const { route } = this.state;
+
+
+  function renderPage() {
+    const { route } = stateRoute;
     if (route.path === '') {
       return <Catalog />;
     }
@@ -33,12 +36,10 @@ export default class App extends React.Component {
     return <NotFound />;
   }
 
-  render() {
-    return (
-      <>
-        <Header />
-        { this.renderPage() }
-      </>
-    );
-  }
+  return (
+    <>
+      <Header />
+      {renderPage()}
+    </>
+  );
 }
